@@ -8,6 +8,7 @@ import { Route, Switch, Link } from "react-router-dom";
 
 import HomeComponent from "./components/Home";
 import AboutComponent from "./components/About";
+import ErrorComponent from "./components/Error";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path="/" component={HomeComponent} />
         <Route exact path="/about" component={AboutComponent} />
+        <Route component={ErrorComponent} />
       </Switch>
       <ul>
         <li>
