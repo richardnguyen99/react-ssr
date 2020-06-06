@@ -18,7 +18,7 @@ interface Manifest {
   [k: string]: string;
 }
 
-let options: ManifestExpressOptions = {};
+const options: ManifestExpressOptions = {};
 let manifest: Manifest = {};
 
 const loadManifest = () => {

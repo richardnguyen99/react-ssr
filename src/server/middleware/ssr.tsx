@@ -41,7 +41,7 @@ const HTML: React.FC<HTMLProps> = ({ scripts, content, helmetContext }) => {
   );
 };
 
-const SSR = (): RequestHandler => (req: Request, res: Response) => {
+const SSR = (): RequestHandler => (req: Request, res: Response): Response => {
   const content = renderToString(
     <StaticRouter location={req.url} context={{}}>
       <App />
@@ -50,7 +50,7 @@ const SSR = (): RequestHandler => (req: Request, res: Response) => {
   const helmet = Helmet.renderStatic();
 
   return res.send(
-    `<!doctype html>` +
+    "<!doctype html>" +
       renderToString(
         <HTML
           content={content}

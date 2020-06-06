@@ -10,7 +10,7 @@ import webpack from "webpack";
  *
  * @returns {boolean} Boolean
  */
-export const isForClient = () => process.argv[1] === "--client";
+export const isForClient = (): boolean => process.argv.includes("--client");
 
 /**
  * Utility function display logs beautifully
@@ -18,7 +18,7 @@ export const isForClient = () => process.argv[1] === "--client";
  * @param {unknown} message Message needed to be displayed
  * @param {string} level Determine which color should be used
  */
-export const logMessage = (message: unknown, level: string = "info") => {
+export const logMessage = (message: unknown, level = "info"): void => {
   const color =
     level === "error"
       ? "red"
@@ -38,7 +38,7 @@ export const waitCompilationDone = (
     compiler.hooks.compile.tap(name, () => {
       logMessage(`[${name}] Compiling `);
     });
-    compiler.hooks.done.tap(name, (stats: any) => {
+    compiler.hooks.done.tap(name, (stats: webpack.Stats) => {
       if (!stats.hasErrors()) {
         return resolve();
       }
@@ -47,7 +47,7 @@ export const waitCompilationDone = (
   });
 };
 
-export const envGetter = () => {
+export const envGetter = (): Record<string, unknown> => {
   type AppEnvironmentType = {
     [k: string]: string | number;
   };

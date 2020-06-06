@@ -6,6 +6,11 @@
  */
 import webpack from "webpack";
 
+import ClientDevConfig from "./client/dev";
+import ServerDevConfig from "./server/dev";
+import ClientProdConfig from "./client/prod";
+import ServerProdConfig from "./server/prod";
+
 /**
  * Takes a parameter as a env and returns a set of Webpack
  * configurations for both client and server based on the env.
@@ -16,11 +21,12 @@ import webpack from "webpack";
 export const getWebpackConfig = (env: string): webpack.Configuration[] => {
   if (env === "development") {
     process.env.NODE_ENV = "development";
-    return [require("./client/dev").default, require("./server/dev").default];
+
+    return [ClientDevConfig, ServerDevConfig];
   }
 
   process.env.NODE_ENV = "production";
-  return [require("./client/prod").default, require("./server/prod").default];
+  return [ClientProdConfig, ServerProdConfig];
 };
 
 export const WEBPACK_PORT =

@@ -13,6 +13,7 @@ const config: webpack.Configuration = {
   devtool: "source-map",
 
   output: {
+    ...CommonConfig.output,
     filename: "bundle.[hash:8].js",
   },
 };
