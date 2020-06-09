@@ -26,6 +26,7 @@ module.exports = (api) => {
     ],
     plugins: [
       "@babel/proposal-object-rest-spread",
+      ["@babel/proposal-decorators", { legacy: true }],
       "@babel/proposal-class-properties",
       "@babel/proposal-optional-chaining",
       "@babel/syntax-dynamic-import",

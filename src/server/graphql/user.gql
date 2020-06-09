@@ -1,0 +1,20 @@
+type User {
+  username: String!
+  password: String!
+
+  firstname: String!
+  lastname: String!
+
+  email: String!
+  birthdate: String
+
+  isActive: Boolean!
+  isAdmin: Boolean!
+
+  created: String!
+  modified: String!
+}
+
+type Query {
+  dummy: String
+}

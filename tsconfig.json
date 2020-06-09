@@ -2,13 +2,15 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "module": "CommonJS",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "target": "ES5",
+    "target": "es5",
     "lib": [
       "DOM",
       "ESNext",
-      "DOM.Iterable"
+      "DOM.Iterable",
+      "ES2015",
+      "ES2016"
     ],
     "baseUrl": "./",
     "sourceMap": true,

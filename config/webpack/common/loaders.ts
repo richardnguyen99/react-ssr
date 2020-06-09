@@ -20,6 +20,12 @@ const babelLoader: webpack.RuleSetRule = {
   },
 };
 
-export const clientLoader = [babelLoader];
+const graphqlLoader: webpack.RuleSetRule = {
+  test: /\.(graphql|gql)$/,
+  exclude: /node_modules/,
+  loader: "graphql-tag/loader",
+};
 
-export const serverLoader = [babelLoader];
+export const clientLoader = [babelLoader, graphqlLoader];
+
+export const serverLoader = [babelLoader, graphqlLoader];
