@@ -8,6 +8,11 @@ import { RequestHandler, Request, Response } from "express";
 import { StaticRouter } from "react-router-dom";
 import { renderToString } from "react-dom/server";
 import { Helmet, HelmetData } from "react-helmet";
+import fetch from "node-fetch";
+import { ApolloClient } from "apollo-boost";
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloProvider } from "@apollo/react-hooks";
 
 import App from "@common/App";
 
@@ -16,9 +21,15 @@ interface HTMLProps {
   css?: Array<string>;
   content: string;
   helmetContext: HelmetData;
+  apolloStates: Record<string, unknown>;
 }
 
-const HTML: React.FC<HTMLProps> = ({ scripts, content, helmetContext }) => {
+const HTML: React.FC<HTMLProps> = ({
+  scripts,
+  content,
+  helmetContext,
+  apolloStates,
+}) => {
   const htmlAttrs = helmetContext.htmlAttributes.toComponent();
   const bodyAttrs = helmetContext.bodyAttributes.toComponent();
 
@@ -36,16 +47,39 @@ const HTML: React.FC<HTMLProps> = ({ scripts, content, helmetContext }) => {
         {scripts.filter(Boolean).map((src) => (
           <script key={src} src={src} />
         ))}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__APOLLO_STATE__=${JSON.stringify(
+              apolloStates
+            ).replace(/>/g, "\\u003c")}`,
+          }}
+        />
       </body>
     </html>
   );
 };
 
 const SSR = (): RequestHandler => (req: Request, res: Response): Response => {
+  const client = new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({
+      uri: "/graphql",
+      // @ts-ignore
+      fetch,
+      credentials: "same-origin",
+      headers: {
+        cookie: req.header("set-cookie"),
+      },
+    }),
+    cache: new InMemoryCache(),
+  });
+
   const content = renderToString(
-    <StaticRouter location={req.url} context={{}}>
-      <App />
-    </StaticRouter>
+    <ApolloProvider client={client}>
+      <StaticRouter location={req.url} context={{}}>
+        <App />
+      </StaticRouter>
+    </ApolloProvider>
   );
   const helmet = Helmet.renderStatic();
 
@@ -59,6 +93,7 @@ const SSR = (): RequestHandler => (req: Request, res: Response): Response => {
             res.locals.assetPath("bundle.js"),
             res.locals.assetPath("vendor.js"),
           ]}
+          apolloStates={client.extract()}
         />
       )
   );
