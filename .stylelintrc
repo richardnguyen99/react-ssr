@@ -1,0 +1,6 @@
+{
+  "extends": ["stylelint-config-recommended", "stylelint-config-sass-guidelines"],
+  "rules": {
+    "string-quotes": "double"
+  }
+}

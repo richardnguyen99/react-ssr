@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es5",
+    "lib": [
+      "DOM",
+      "ESNext",
+      "DOM.Iterable",
+      "ES2015",
+      "ES2016"
+    ],
+    "baseUrl": "./",
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "paths": {
+      "@client/*": [
+        "src/client/*"
+      ],
+      "@server/*": [
+        "src/server/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "^config": [
+        "config/index"
+      ],
+      "^config/*": [
+        "config/*"
+      ],
+      "^scripts/*": [
+        "scripts/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
