@@ -5,16 +5,17 @@
  */
 import React from "react";
 import { RequestHandler, Request, Response } from "express";
+import { StaticRouterContext, matchPath } from "react-router";
 import { StaticRouter } from "react-router-dom";
 import { renderToString } from "react-dom/server";
 import { Helmet, HelmetData } from "react-helmet";
-import fetch from "node-fetch";
-import { ApolloClient } from "apollo-boost";
-import { createHttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { getDataFromTree } from "@apollo/react-ssr";
 import { ApolloProvider } from "@apollo/react-hooks";
+import SchemaLink from "apollo-link-schema";
 
 import App from "@common/App";
+import { createApolloClient } from "@common/utils/apolloLinks";
+import schema from "@server/utils/gqlCombine";
 
 interface HTMLProps {
   scripts: Array<string>;
@@ -59,44 +60,48 @@ const HTML: React.FC<HTMLProps> = ({
   );
 };
 
-const SSR = (): RequestHandler => (req: Request, res: Response): Response => {
-  const client = new ApolloClient({
-    ssrMode: true,
-    link: createHttpLink({
-      uri: "/graphql",
-      // @ts-ignore
-      fetch,
-      credentials: "same-origin",
-      headers: {
-        cookie: req.header("set-cookie"),
-      },
-    }),
-    cache: new InMemoryCache(),
-  });
+const SSR = (): RequestHandler => (req: Request, res: Response): void => {
+  // const baseUrl = `${req.protocol}://${req.get("Host")}`;
+  const client = createApolloClient({ link: new SchemaLink({ schema }) });
+  const context: StaticRouterContext = {};
 
-  const content = renderToString(
+  const jsx = (
     <ApolloProvider client={client}>
-      <StaticRouter location={req.url} context={{}}>
+      <StaticRouter location={req.url} context={context}>
         <App />
       </StaticRouter>
     </ApolloProvider>
   );
-  const helmet = Helmet.renderStatic();
 
-  return res.send(
-    "<!doctype html>" +
-      renderToString(
-        <HTML
-          content={content}
-          helmetContext={helmet}
-          scripts={[
-            res.locals.assetPath("bundle.js"),
-            res.locals.assetPath("vendor.js"),
-          ]}
-          apolloStates={client.extract()}
-        />
-      )
-  );
+  getDataFromTree(jsx).then(() => {
+    const content = renderToString(jsx);
+    const helmet = Helmet.renderStatic();
+
+    res.status(200);
+    res.send(
+      "<!doctype html>" +
+        renderToString(
+          <HTML
+            content={content}
+            helmetContext={helmet}
+            scripts={[
+              res.locals.assetPath("bundle.js"),
+              res.locals.assetPath("vendor.js"),
+            ]}
+            apolloStates={client.extract()}
+          />
+        )
+    );
+
+    if (context.url) {
+      res.writeHead(301, {
+        Location: context.url,
+      });
+      res.end();
+    }
+
+    res.end();
+  });
 };
 
 export default SSR;

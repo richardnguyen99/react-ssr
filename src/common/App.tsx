@@ -8,7 +8,8 @@ import { Route, Switch, Link } from "react-router-dom";
 
 import HomeComponent from "./components/Home";
 import AboutComponent from "./components/About";
-import ErrorComponent from "./components/Error";
+import UserComponent from "./components/User";
+import Test from "./components/Test";
 
 const App: React.FC = () => {
   return (
@@ -16,7 +17,8 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path="/" component={HomeComponent} />
         <Route exact path="/about" component={AboutComponent} />
-        <Route component={ErrorComponent} />
+        <Route exact path="/user" component={UserComponent} />
+        <Route exact path="/test" component={Test} />
       </Switch>
       <ul>
         <li>
@@ -24,6 +26,9 @@ const App: React.FC = () => {
         </li>
         <li>
           <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/user">User</Link>
         </li>
       </ul>
     </>

@@ -9,8 +9,11 @@ import User from "../entities/User";
 
 const UserResolver: IResolvers = {
   Query: {
-    getAllUser: async (): Promise<User[]> => {
+    dummy: (): string => "Dummy GraphQL Testing",
+    getUsers: async (): Promise<User[]> => {
       const user = await User.find();
+
+      console.log(user);
 
       return user;
     },

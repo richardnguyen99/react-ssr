@@ -26,6 +26,8 @@ interface SchemaContext {
 
 const app = express();
 
+createConnection(TypeORMConfig);
+
 // Apply express middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,18 +46,19 @@ app.use(
   })
 );
 
-app.use(SSR());
-
 const server = new ApolloServer({
   schema: rootSchema,
   resolvers: UserResolver,
-  playground: process.env.NODE_ENV === "development",
+  playground:
+    process.env.NODE_ENV === "development"
+      ? { endpoint: "/api/graphql" }
+      : false,
   context: ({ req, res }: SchemaContext): SchemaContext => ({ req, res }),
 });
 
-server.applyMiddleware({ app, cors: true });
+server.applyMiddleware({ app, path: "/api/graphql" });
 
-createConnection(TypeORMConfig);
+app.get("*", SSR());
 
 app.listen(3000, () => {
   console.log("`✅✅✅ Server is running at http://localhost:3000 ✅✅✅");

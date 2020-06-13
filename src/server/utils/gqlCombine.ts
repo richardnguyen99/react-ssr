@@ -9,13 +9,12 @@
 import { makeExecutableSchema, mergeSchemas } from "graphql-tools";
 
 import UserSchema from "../graphql/user.gql";
-import { addMockFunctionsToSchema } from "apollo-server";
+import UserResolver from "@server/resolvers/User";
 
 const userSchema = makeExecutableSchema({
   typeDefs: UserSchema,
+  resolvers: UserResolver,
 });
-
-addMockFunctionsToSchema({ schema: userSchema });
 
 const schema = mergeSchemas({
   schemas: [userSchema],
