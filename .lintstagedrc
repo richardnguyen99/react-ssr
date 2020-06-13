@@ -1,3 +1,4 @@
 {
-  "**/*.ts?(x)": "yarn run lint"
+  "**/*.ts?(x)": "yarn run lint",
+  "**/*.scss": "yarn run csslint"
 }

@@ -11,6 +11,8 @@ import AboutComponent from "./components/About";
 import UserComponent from "./components/User";
 import Test from "./components/Test";
 
+import "./styles/global.scss";
+
 const App: React.FC = () => {
   return (
     <>

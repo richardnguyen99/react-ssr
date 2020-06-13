@@ -19,7 +19,7 @@ import schema from "@server/utils/gqlCombine";
 
 interface HTMLProps {
   scripts: Array<string>;
-  css?: Array<string>;
+  css: Array<string>;
   content: string;
   helmetContext: HelmetData;
   apolloStates: Record<string, unknown>;
@@ -27,6 +27,7 @@ interface HTMLProps {
 
 const HTML: React.FC<HTMLProps> = ({
   scripts,
+  css,
   content,
   helmetContext,
   apolloStates,
@@ -42,6 +43,9 @@ const HTML: React.FC<HTMLProps> = ({
         {helmetContext.title.toComponent()}
         {helmetContext.meta.toComponent()}
         {helmetContext.link.toComponent()}
+        {css.filter(Boolean).map((href) => (
+          <link key={href} rel="stylesheet" href={href} />
+        ))}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -83,6 +87,7 @@ const SSR = (): RequestHandler => (req: Request, res: Response): void => {
         renderToString(
           <HTML
             content={content}
+            css={[res.locals.assetPath("bundle.css")]}
             helmetContext={helmet}
             scripts={[
               res.locals.assetPath("bundle.js"),

@@ -5,8 +5,24 @@
  */
 import webpack from "webpack";
 import ManifestPlugin from "webpack-manifest-plugin";
+import CaseSensitivePathsWebpackPlugin from "case-sensitive-paths-webpack-plugin";
+import MiniCSSExtractPlugin from "mini-css-extract-plugin";
 
 import { envGetter } from "^config";
+
+export const commonPlugins: webpack.Plugin[] = [
+  new CaseSensitivePathsWebpackPlugin(),
+  new MiniCSSExtractPlugin({
+    filename:
+      process.env.NODE_END === "development"
+        ? "[name].css"
+        : "[name].[contenthash].css",
+    chunkFilename:
+      process.env.NODE_END === "development"
+        ? "[id].css"
+        : "[id].[contenthash].css",
+  }),
+];
 
 export const clientPlugins: webpack.Plugin[] = [
   new ManifestPlugin({

@@ -10,7 +10,7 @@ import TerserPlugin from "terser-webpack-plugin";
 import paths from "^config/paths";
 import { clientLoader } from "^config/webpack/common/loaders";
 import resolvers from "../common/resolvers";
-import { clientPlugins } from "../common/plugins";
+import { clientPlugins, commonPlugins } from "../common/plugins";
 
 const config: webpack.Configuration = {
   name: "client",
@@ -28,7 +28,7 @@ const config: webpack.Configuration = {
     rules: clientLoader,
   },
   resolve: resolvers,
-  plugins: [...clientPlugins],
+  plugins: [...commonPlugins, ...clientPlugins],
   node: {
     dgram: "empty",
     fs: "empty",

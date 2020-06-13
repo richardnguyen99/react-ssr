@@ -10,7 +10,7 @@ import WebpackNodeExternals from "webpack-node-externals";
 import paths from "^config/paths";
 import resolvers from "../common/resolvers";
 import { serverLoader } from "../common/loaders";
-import { serverPlugins } from "../common/plugins";
+import { serverPlugins, commonPlugins } from "../common/plugins";
 
 const config: webpack.Configuration = {
   name: "server",
@@ -36,7 +36,7 @@ const config: webpack.Configuration = {
   module: {
     rules: serverLoader,
   },
-  plugins: [...serverPlugins],
+  plugins: [...commonPlugins, ...serverPlugins],
   stats: {
     assets: false,
     cached: false,
