@@ -5,7 +5,7 @@
  */
 import { RouteProps as ReactRouterProps } from "react-router";
 
-import { HomeComponent, AboutComponent, UserComponent } from "../components";
+import { Home, AboutComponent, UserComponent } from "../pages";
 
 interface RouteProps extends ReactRouterProps {
   key: string;

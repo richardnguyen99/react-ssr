@@ -1,0 +1,18 @@
+$white: #fff !default;
+
+$navbar__padding-top: 1.5rem;
+$navbar__padding-bottom: 1.5rem;
+
+$body__text--light: #222;
+$body__text--dark: #d7dadc;
+
+$body__background--light: #fff;
+$body__background--dark: #1a1a1b;
+
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+) !default;

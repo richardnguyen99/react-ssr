@@ -1,0 +1,132 @@
+// Navbar Content
+
+.navbar {
+  align-items: center;
+  display: flex;
+
+  justify-content: space-between;
+  left: 0;
+  padding-bottom: $navbar__padding-bottom;
+
+  // Default navbar padding values
+  // Can be changed due to other classes;
+  padding-top: $navbar__padding-top;
+
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2;
+
+  @media screen and (min-width: 1200px) {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
+    .container {
+      flex-flow: nowrap;
+    }
+
+    .navbar__nav {
+      flex-direction: row;
+
+      .navbar__link {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+
+    .navbar__collapse {
+      display: flex;
+    }
+  }
+
+  &--light {
+    background: $body__background--light;
+    color: $body__text--light;
+  }
+
+  &--dark {
+    background: $body__background--dark;
+    color: $body__text--dark;
+  }
+
+  &__brand {
+    display: inline-block;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+
+    line-height: inherit;
+
+    margin-right: 0.5rem;
+    padding-bottom: 0.3125rem;
+
+    padding-top: 0.3125rem;
+    white-space: nowrap;
+
+    &--light {
+      background: $body__background--light;
+      color: $body__text--light;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+
+    &--dark {
+      background: $body__background--light;
+      color: $body__text--light;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__collapse {
+
+    align-items: center;
+    flex-basis: 100%;
+    flex-grow: 1;
+
+    @media screen and (max-width: 992px) {
+      height: auto;
+      left: 0;
+
+      margin: 0.5rem;
+
+      overflow-y: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 10;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-flow: row;
+
+    list-style: none;
+
+    &--ml-auto {
+      margin-left: auto;
+    }
+
+    &--mr-auto {
+      margin-right: auto;
+    }
+  }
+
+  .container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    @media (min-width: 1200px) {
+      flex-flow: nowrap;
+    }
+  }
+}

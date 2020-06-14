@@ -6,21 +6,20 @@
 import React from "react";
 import { Route, Switch, Link } from "react-router-dom";
 
-import HomeComponent from "./components/Home";
-import AboutComponent from "./components/About";
-import UserComponent from "./components/User";
-import Test from "./components/Test";
+import { Home, About, User, ErrorPage } from "@common/pages";
 
 import "./styles/global.scss";
+import Navbar from "./components/Navbar/Navbar";
 
 const App: React.FC = () => {
   return (
     <>
+      <Navbar>ReactQL</Navbar>
       <Switch>
-        <Route exact path="/" component={HomeComponent} />
-        <Route exact path="/about" component={AboutComponent} />
-        <Route exact path="/user" component={UserComponent} />
-        <Route exact path="/test" component={Test} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/user" component={User} />
+        <Route component={ErrorPage} />
       </Switch>
       <ul>
         <li>

@@ -1,0 +1,11 @@
+// Nav items
+
+.nav {
+  display: flex;
+
+  &__link {
+    display: block;
+
+    padding: 0.5rem 1rem;
+  }
+}

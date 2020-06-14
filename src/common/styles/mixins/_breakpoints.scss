@@ -1,0 +1,26 @@
+// Breakpoints
+
+/*
+ * Returns values of keys in an object.
+ */
+@function get-breakpoint($name, $breakpoints: $breakpoints) {
+  $breakpoint: map-get($breakpoints, $name);
+
+  @return if($breakpoint != 0, $breakpoint, null);
+}
+
+@function get-infix($name, $breakpoints: $breakpoints) {
+  @return if(get-breakpoint($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $breakpoints) {
+  $min: get-breakpoint($name, $breakpoints);
+
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
