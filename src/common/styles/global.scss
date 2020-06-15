@@ -1,3 +1,43 @@
+@font-face {
+  font-family: "Playfair-Display";
+  src: url("./fonts/PlayfairDisplay/PlayfairDisplay-Black.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-BlackItalic.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-Bold.ttf") format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-BoldItalic.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-ExtraBold.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-ExtraBoldItalic.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-Italic.ttf") format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-Medium.ttf") format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-MediumItalic.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-SemiBold.ttf")
+    format("truetype"),
+    url("./fonts/PlayfairDisplay/PlayfairDisplay-SemiBoldItalic.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+
+  src: url("./fonts/Lato/Lato-Black.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-BlackItalic.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-Bold.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-BoldItalic.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-Italic.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-Light.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-LightItalic.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-Regular.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-Thin.ttf") format("truetype"),
+    url("./fonts/Lato/Lato-ThinItalic.ttf") format("truetype");
+}
+
 // Core configurations
 @import "variables";
 @import "mixins";

@@ -4,12 +4,11 @@
   align-items: center;
   display: flex;
 
+  font-family: $font--serif;
+
   justify-content: space-between;
   left: 0;
   padding-bottom: $navbar__padding-bottom;
-
-  // Default navbar padding values
-  // Can be changed due to other classes;
   padding-top: $navbar__padding-top;
 
   position: fixed;
@@ -54,7 +53,6 @@
 
     font-size: 1.25rem;
     font-weight: 700;
-    letter-spacing: 4px;
 
     line-height: inherit;
 
@@ -62,6 +60,7 @@
     padding-bottom: 0.3125rem;
 
     padding-top: 0.3125rem;
+    text-decoration: none;
     white-space: nowrap;
 
     &--light {
@@ -86,7 +85,6 @@
   }
 
   &__collapse {
-
     align-items: center;
     flex-basis: 100%;
     flex-grow: 1;

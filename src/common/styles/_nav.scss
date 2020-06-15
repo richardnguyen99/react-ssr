@@ -2,10 +2,19 @@
 
 .nav {
   display: flex;
+  flex-wrap: nowrap;
+  list-style: none;
 
   &__link {
     display: block;
 
     padding: 0.5rem 1rem;
+
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
   }
 }

@@ -9,25 +9,33 @@ const Navbar: React.FC = ({ children }) => {
   return (
     <nav className="navbar navbar--light">
       <div className="container">
-        <a className="navbar__brand">ReactQL</a>
+        <a href="/" className="navbar__brand">
+          ReactQL
+        </a>
         <ul className="navbar__nav">
           <li className="nav__item">
-            <a className="nav__link">About</a>
+            <a href="/about" className="nav__link">
+              About
+            </a>
           </li>
+          <li className="nav__item"></li>
           <li className="nav__item">
-            <a className="nav__link">About</a>
-          </li>
-          <li className="nav__item">
-            <a className="nav__link">About</a>
+            <a href="/trend" className="nav__link">
+              Trend
+            </a>
           </li>
         </ul>
         <div className="navbar__collapse">
           <ul className="navbar__nav navbar__nav--ml-auto">
             <li className="nav__item">
-              <a className="nav__link">Login</a>
+              <a href="/login" className="nav__link">
+                Login
+              </a>
             </li>
             <li className="nav__item">
-              <a className="nav__link">Register</a>
+              <a href="/register" className="nav__link">
+                Register
+              </a>
             </li>
           </ul>
         </div>

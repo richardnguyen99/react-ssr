@@ -50,12 +50,27 @@ const babelLoader: webpack.RuleSetRule = {
   },
 };
 
+const fileLoader: webpack.RuleSetRule = {
+  test: /\.(woff|woff2|eot|ttf|otf)$/,
+  use: ["file-loader"],
+};
+
 const graphqlLoader: webpack.RuleSetRule = {
   test: /\.(graphql|gql)$/,
   exclude: /node_modules/,
   loader: "graphql-tag/loader",
 };
 
-export const clientLoader = [babelLoader, graphqlLoader, cssLoaderClient];
+export const clientLoader = [
+  babelLoader,
+  fileLoader,
+  graphqlLoader,
+  cssLoaderClient,
+];
 
-export const serverLoader = [babelLoader, graphqlLoader, cssLoaderServer];
+export const serverLoader = [
+  babelLoader,
+  fileLoader,
+  graphqlLoader,
+  cssLoaderServer,
+];

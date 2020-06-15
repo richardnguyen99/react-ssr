@@ -23,6 +23,8 @@ html {
 
 body {
   margin: 0;
+
+  font-family: $font--sans;
 }
 
 /**
@@ -76,6 +78,10 @@ pre {
 
 a {
   background-color: transparent;
+
+  &:visited {
+    color: transparent;
+  }
 }
 
 /**
