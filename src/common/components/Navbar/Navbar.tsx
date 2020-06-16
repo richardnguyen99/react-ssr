@@ -7,7 +7,7 @@ import React from "react";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="navbar navbar--light text--bold">
+    <nav className="navbar navbar--light navbar--border text--bold">
       <div className="container">
         <a
           href="/"

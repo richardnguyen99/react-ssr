@@ -9,7 +9,7 @@ import { ReactComponent as AppLogo } from "^config/assets/logo.svg";
 
 const Home: React.FC = () => {
   return (
-    <main>
+    <main className="master">
       <div className="container">
         <div className="row">
           <div className="col--md-4 order--md-2">
@@ -20,9 +20,17 @@ const Home: React.FC = () => {
               ReactQL - A Server-side-rendered React Application.
             </h1>
             <p className="text--light">
-              A React application server-side-rendered by Express with the
-              support of Apollo, GraphQL, Webpack, SCSS & secured by Typescript.
+              A boilerplate for a React application server-side-rendered by
+              Express, bundled by Webpack, powered by Apollo & MongoDB, styled
+              with SCSS, secured by Stylelint/ESlint/Jest, written in
+              Typescript.
             </p>
+            <a
+              href="https://github.com/richardnguyen99/react-ssr.git"
+              className="btn btn--dark"
+            >
+              View source
+            </a>
           </div>
         </div>
       </div>

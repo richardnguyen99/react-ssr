@@ -40,12 +40,26 @@
 
   &--light {
     background: $body__background--light;
-    color: $body__text--light;
+    color: $text--black;
+
+    // Remove default color
+    > * a:visited {
+      color: $text--black;
+    }
   }
 
   &--dark {
     background: $body__background--dark;
-    color: $body__text--dark;
+    color: $text--white;
+
+    // Remove default color
+    > * a:visited {
+      color: $text--white;
+    }
+  }
+
+  &--border {
+    border: $border;
   }
 
   &__brand {
