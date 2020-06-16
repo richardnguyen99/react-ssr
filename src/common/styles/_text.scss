@@ -1,0 +1,56 @@
+// Text
+.text {
+  font-size: 1rem;
+
+  &--xl {
+    font-size: 4rem;
+  }
+
+  &--lg {
+    font-size: 3rem;
+  }
+
+  &--md {
+    font-size: 2rem;
+  }
+
+  &--sm {
+    font-size: 0.75rem;
+  }
+
+  &--xs {
+    font-size: 0.5rem;
+  }
+
+  &--light {
+    font-weight: 400;
+  }
+
+  &--black {
+    font-weight: 900;
+  }
+
+  &--bold {
+    font-weight: bold;
+  }
+
+  &--serif {
+    font-family: $font--serif;
+  }
+
+  &--sans-serif {
+    font-family: $font--sans;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--upper {
+    text-transform: uppercase;
+  }
+
+  &--spacing-4 {
+    letter-spacing: 4px;
+  }
+}

@@ -7,7 +7,7 @@
 import React from "react";
 
 const About: React.FC = () => {
-  return <div>Hello from About component</div>;
+  return <div className="container">Hello from About component</div>;
 };
 
 export default About;

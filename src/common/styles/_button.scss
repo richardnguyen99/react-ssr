@@ -1,0 +1,65 @@
+// Buttons
+
+.btn {
+
+  @include btn-solid($text--gray-dark, $gray--000, $gray--000);
+
+  appearance: none;
+
+  background-position: -1px -1px;
+
+  background-repeat: repeat-x;
+
+  background-size: 110% 110%;
+
+  border: $border-width $border-style $border-color-button;
+
+  border-radius: 0.5rem;
+
+  cursor: pointer;
+
+  display: inline-block;
+
+  font-size: $font--sans;
+
+  font-weight: 400;
+
+  line-height: 1rem;
+
+  padding: 0.5rem 1rem;
+  position: relative;
+
+  user-select: none;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+
+  &:hover {
+
+    background-repeat: repeat-x;
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:disabled,
+  &.disabled,
+  &[aria-disabled="true"] {
+
+    background-position: 0 0;
+    cursor: default;
+  }
+
+  &:active,
+  &.selected,
+  &[aria-selected="true"] {
+    background-image: none;
+  }
+
+  &--dark {
+    @include btn-solid($text--white, $gray--600, $gray--900);
+  }
+}

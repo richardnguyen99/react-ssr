@@ -4,35 +4,29 @@
  * @author Richard Nguyen <richard.ng0616@gmail.com>
  */
 import React from "react";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
-import HomeComponent from "./components/Home";
-import AboutComponent from "./components/About";
-import UserComponent from "./components/User";
-import Test from "./components/Test";
+import { Home, About, User, ErrorPage } from "@common/pages";
 
+import favicon from "^config/assets/favicon.png";
 import "./styles/global.scss";
+import Navbar from "./components/Navbar/Navbar";
 
 const App: React.FC = () => {
   return (
     <>
+      <Helmet
+        defaultTitle="ReactQL - A Server-side-rendered React application"
+        link={[{ rel: "icon", type: "image/png", href: favicon }]}
+      />
+      <Navbar>ReactQL</Navbar>
       <Switch>
-        <Route exact path="/" component={HomeComponent} />
-        <Route exact path="/about" component={AboutComponent} />
-        <Route exact path="/user" component={UserComponent} />
-        <Route exact path="/test" component={Test} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/user" component={User} />
+        <Route component={ErrorPage} />
       </Switch>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/user">User</Link>
-        </li>
-      </ul>
     </>
   );
 };
