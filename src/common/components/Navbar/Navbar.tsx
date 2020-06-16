@@ -5,11 +5,14 @@
  */
 import React from "react";
 
-const Navbar: React.FC = ({ children }) => {
+const Navbar: React.FC = () => {
   return (
-    <nav className="navbar navbar--light">
+    <nav className="navbar navbar--light text--bold">
       <div className="container">
-        <a href="/" className="navbar__brand">
+        <a
+          href="/"
+          className="navbar__brand text--upper text--spacing-4 text--black"
+        >
           ReactQL
         </a>
         <ul className="navbar__nav">

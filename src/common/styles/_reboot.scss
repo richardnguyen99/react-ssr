@@ -356,3 +356,11 @@ template {
 [hidden] {
   display: none;
 }
+
+/**
+ * Make sure that SVG always stays in the middle
+ */
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+}

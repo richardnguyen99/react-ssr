@@ -6,11 +6,13 @@
   @include media-breakpoint-up($breakpoint) {
     $infix: get-infix($breakpoint, $breakpoints);
 
-    .ml#{$infix}-auto {
+    .ml#{$infix}--auto,
+    .mx#{$infix}--auto {
       margin-left: auto;
     }
 
-    .mr#{$infix}-auto {
+    .mr#{$infix}--auto,
+    .mx#{$infix}--auto {
       margin-right: auto;
     }
   }

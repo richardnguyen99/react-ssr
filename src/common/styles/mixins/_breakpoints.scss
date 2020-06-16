@@ -10,7 +10,7 @@
 }
 
 @function get-infix($name, $breakpoints: $breakpoints) {
-  @return if(get-breakpoint($name, $breakpoints) == null, "", "-#{$name}");
+  @return if(get-breakpoint($name, $breakpoints) == null, "", "--#{$name}");
 }
 
 @mixin media-breakpoint-up($name, $breakpoints: $breakpoints) {

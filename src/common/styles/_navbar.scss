@@ -4,14 +4,14 @@
   align-items: center;
   display: flex;
 
-  font-family: $font--serif;
+  font-family: $font--sans;
 
   justify-content: space-between;
   left: 0;
   padding-bottom: $navbar__padding-bottom;
   padding-top: $navbar__padding-top;
 
-  position: fixed;
+  position: sticky;
   right: 0;
   top: 0;
   z-index: 2;

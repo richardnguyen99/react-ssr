@@ -44,9 +44,39 @@ const babelLoader: webpack.RuleSetRule = {
   exclude: /node_modules/,
   loader: require.resolve("babel-loader"),
   options: {
+    plugins: [
+      [
+        require.resolve("babel-plugin-named-asset-import"),
+        {
+          loaderMap: {
+            svg: {
+              ReactComponent: "@svgr/webpack?-prettier,-svgo![path]",
+            },
+          },
+        },
+      ],
+    ],
     cacheDirectory: true,
     cacheCompression: isProd,
     compact: isProd,
+  },
+};
+
+const urlLoaderClient: webpack.RuleSetRule = {
+  test: /\.(png|jpe?g|gif|svg)$/,
+  loader: require.resolve("url-loader"),
+  options: {
+    limit: 2048,
+    name: "assets/[name]:[hash:8].[ext]",
+  },
+};
+
+const urlLoaderServer: webpack.RuleSetRule = {
+  ...urlLoaderClient,
+  options: {
+    // @ts-ignore
+    ...urlLoaderClient.options,
+    emitFile: false,
   },
 };
 
@@ -66,6 +96,7 @@ export const clientLoader = [
   fileLoader,
   graphqlLoader,
   cssLoaderClient,
+  urlLoaderClient,
 ];
 
 export const serverLoader = [
@@ -73,4 +104,5 @@ export const serverLoader = [
   fileLoader,
   graphqlLoader,
   cssLoaderServer,
+  urlLoaderServer,
 ];

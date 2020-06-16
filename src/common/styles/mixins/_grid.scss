@@ -1,0 +1,60 @@
+// Grid management
+
+@mixin make-row() {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  margin-left: -1rem;
+  margin-right: -1rem;
+
+  margin-top: 0;
+}
+
+@mixin make-col-ready {
+  box-sizing: border-box;
+
+  flex-shrink: 0;
+  margin-top: 0;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+@mixin make-col($size) {
+  flex: 0 0 auto;
+  width: percentage($size / 12);
+}
+
+@mixin make-col-auto {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+@mixin make-grid-columns($breakpoints: $breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: get-infix($breakpoint);
+
+    @include media-breakpoint-up($breakpoint) {
+      .col#{$infix} {
+        flex: 1 0 0%;
+      }
+
+      .col#{$infix}--auto {
+        @include make-col-auto();
+      }
+
+      @for $i from 1 through 12 {
+        .col#{$infix}-#{$i} {
+
+          @include make-col($i);
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        .order#{$infix}-#{$i} {
+          order: $i;
+        }
+      }
+    }
+  }
+}
