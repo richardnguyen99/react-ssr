@@ -7,7 +7,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import { Home, About, User, ErrorPage } from "@common/pages";
+import { Home, About, User, ErrorPage, Login, Register } from "@common/pages";
 
 import favicon from "^config/assets/favicon.png";
 import "./styles/global.scss";
@@ -25,6 +25,8 @@ const App: React.FC = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/about" component={About} />
         <Route exact path="/user" component={User} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
         <Route component={ErrorPage} />
       </Switch>
     </>
