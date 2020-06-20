@@ -23,43 +23,48 @@ interface SchemaContext {
   req: Request;
   res: Response;
 }
+(async function () {
+  const app = express();
 
-const app = express();
+  await createConnection(TypeORMConfig);
 
-createConnection(TypeORMConfig);
+  // Apply express middlewares
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(compression());
+  app.use(cors());
 
-// Apply express middlewares
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(compression());
-app.use(cors());
+  app.use(
+    paths.publicPath,
+    express.static(path.join(paths.clientBuild, paths.publicPath))
+  );
 
-app.use(
-  paths.publicPath,
-  express.static(path.join(paths.clientBuild, paths.publicPath))
-);
+  app.use(
+    ManifestExpress({
+      path: `${path.join(
+        paths.clientBuild,
+        paths.publicPath,
+        "manifest.json"
+      )}`,
+      cache: true,
+    })
+  );
 
-app.use(
-  ManifestExpress({
-    path: `${path.join(paths.clientBuild, paths.publicPath, "manifest.json")}`,
-    cache: true,
-  })
-);
+  const server = new ApolloServer({
+    schema: rootSchema,
+    resolvers: UserResolver,
+    playground:
+      process.env.NODE_ENV === "development"
+        ? { endpoint: "/api/graphql" }
+        : false,
+    context: ({ req, res }: SchemaContext): SchemaContext => ({ req, res }),
+  });
 
-const server = new ApolloServer({
-  schema: rootSchema,
-  resolvers: UserResolver,
-  playground:
-    process.env.NODE_ENV === "development"
-      ? { endpoint: "/api/graphql" }
-      : false,
-  context: ({ req, res }: SchemaContext): SchemaContext => ({ req, res }),
-});
+  server.applyMiddleware({ app, path: "/api/graphql" });
 
-server.applyMiddleware({ app, path: "/api/graphql" });
+  app.get("*", SSR());
 
-app.get("*", SSR());
-
-app.listen(3000, () => {
-  console.log("`✅✅✅ Server is running at http://localhost:3000 ✅✅✅");
-});
+  app.listen(3000, () => {
+    console.log("`✅✅✅ Server is running at http://localhost:3000 ✅✅✅");
+  });
+})();

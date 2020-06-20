@@ -16,7 +16,18 @@ type User {
   modified: String!
 }
 
+type UserPayload {
+  success: Boolean!
+  message: String!
+  payload: User!
+}
+
 type Query {
   dummy: String!
   getUsers: [User]!
+}
+
+type Mutation {
+  # TODO: Returns specific data, not only a string.address
+  register(username: String, email: String, password: String): UserPayload!
 }
