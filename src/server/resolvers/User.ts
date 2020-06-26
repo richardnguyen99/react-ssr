@@ -4,22 +4,102 @@
  * @author Richard Nguyen <richard.ng0616@gmail.com>
  */
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { IResolvers } from "apollo-server";
 
 import User from "../entities/User";
-import { Payload } from "@server/interfaces/payload";
-
-interface RegisterArgs {
-  username: string;
-  email: string;
-  password: string;
-
-  lastname?: string;
-  firstname?: string;
-}
+import {
+  LoginPayload,
+  RegisterPayload,
+  UserArgs,
+  LoginArgs,
+  RegisterArgs,
+} from "@server/interfaces";
+import { UserLoginPayload, UserPayload } from "@common/generated/graphql";
+import { getUserWithToken } from "@server/utils";
 
 const UserResolver: IResolvers = {
   Query: {
+    user: async (_parents, args: UserArgs, context): Promise<UserPayload> => {
+      const { username } = args;
+
+      const userEndpoint = await User.findOne({ where: { username } });
+
+      if (userEndpoint) {
+        try {
+          const token: string = context.req.headers.authorization || "";
+
+          const user = await getUserWithToken(token);
+
+          if (user) {
+            const { username, isAdmin } = user;
+
+            if (isAdmin) {
+              return {
+                message: "fetched for admins",
+                success: true,
+                data: {
+                  username: userEndpoint.username,
+                  email: userEndpoint.email,
+                  _id: userEndpoint._id.toHexString(),
+                  password: userEndpoint.password,
+                  created: userEndpoint.created,
+                  modified: userEndpoint.modified,
+                  firstname: userEndpoint.firstname,
+                  lastname: userEndpoint.lastname,
+                  isActive: userEndpoint.isActive,
+                  isAdmin: userEndpoint.isAdmin,
+                },
+              };
+            }
+
+            if (username === userEndpoint.username) {
+              return {
+                message: "fetched for user",
+                success: true,
+                data: {
+                  _id: user._id.toHexString(),
+                  username,
+                  firstname: user.firstname,
+                  lastname: user.lastname,
+                  email: user.email,
+                  password: user.password,
+                  created: user.created,
+                  modified: user.modified,
+                  isActive: user.isActive,
+                  isAdmin: user.isAdmin,
+                },
+              };
+            }
+          }
+
+          return {
+            message: "fetched for viewers",
+            success: true,
+            data: {
+              username: userEndpoint.username,
+              email: userEndpoint.email,
+              _id: userEndpoint._id.toHexString(),
+              password: userEndpoint.password,
+              created: userEndpoint.created,
+              modified: userEndpoint.modified,
+              firstname: userEndpoint.firstname,
+              lastname: userEndpoint.lastname,
+              isActive: userEndpoint.isActive,
+              isAdmin: userEndpoint.isAdmin,
+            },
+          };
+        } catch (e) {
+          throw new Error(e);
+        }
+      }
+
+      return {
+        message: "user doesn't exist",
+        success: false,
+        data: null,
+      };
+    },
     dummy: (): string => "Dummy GraphQL Testing",
     getUsers: async (): Promise<User[]> => {
       const user = await User.find();
@@ -28,7 +108,66 @@ const UserResolver: IResolvers = {
     },
   },
   Mutation: {
-    register: async (_, args: RegisterArgs): Promise<Payload> => {
+    login: async (_, args: LoginArgs): Promise<UserLoginPayload> => {
+      const { username, password } = args;
+
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (user) {
+        const isMatched = await bcrypt.compare(password, user.password);
+
+        if (!isMatched) {
+          return {
+            success: false,
+            message: "not found",
+            token: "",
+          };
+        }
+
+        try {
+          const token = jwt.sign(
+            {
+              iat: Math.floor(Date.now() / 1000) - 30,
+              exp: Math.floor(Date.now() / 1000) + 60 * 60,
+              data: {
+                id: user._id,
+              },
+            },
+            "react-ssr"
+          );
+
+          return {
+            success: true,
+            message: "logged in",
+            data: {
+              username: user.username,
+              email: user.email,
+              _id: user._id.toHexString(),
+              password: user.password,
+              created: user.created,
+              modified: user.modified,
+              firstname: user.firstname,
+              lastname: user.lastname,
+              isActive: user.isActive,
+              isAdmin: user.isAdmin,
+            },
+            token,
+          };
+        } catch (e) {
+          throw new Error(e);
+        }
+      }
+
+      return {
+        success: false,
+        message: "not found",
+        token: "",
+      };
+    },
+
+    register: async (_, args: RegisterArgs): Promise<RegisterPayload> => {
       const { username, email, password, lastname, firstname } = args;
 
       const doesUserExists = await User.findOne({
@@ -64,10 +203,7 @@ const UserResolver: IResolvers = {
         return {
           success: true,
           message: "registered",
-          payload: {
-            id: user.id,
-            username: user.username,
-          },
+          username: user.username,
         };
       } catch (e) {
         throw new Error(e);

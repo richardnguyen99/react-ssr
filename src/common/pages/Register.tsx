@@ -18,7 +18,7 @@ export const REGISTER_USER = gql`
 `;
 
 const Register: React.FC = () => {
-  const [registerUser, { loading, data }] = useMutation(REGISTER_USER);
+  const [registerUser, { loading }] = useMutation(REGISTER_USER);
 
   return (
     <>
@@ -38,7 +38,6 @@ const Register: React.FC = () => {
             handleSubmit,
             isSubmitting,
           }) => {
-            console.log(data);
             return (
               <form className="form form--light" onSubmit={handleSubmit}>
                 <label>Username</label>
