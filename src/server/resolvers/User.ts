@@ -14,9 +14,15 @@ import {
   UserArgs,
   LoginArgs,
   RegisterArgs,
+  SchemaContext,
 } from "@server/interfaces";
 import { UserLoginPayload, UserPayload } from "@common/generated/graphql";
 import { getUserWithToken } from "@server/utils";
+import {
+  sendRefreshToken,
+  createRefreshToken,
+  createAccessToken,
+} from "@server/utils/token";
 
 const UserResolver: IResolvers = {
   Query: {
@@ -108,7 +114,11 @@ const UserResolver: IResolvers = {
     },
   },
   Mutation: {
-    login: async (_, args: LoginArgs): Promise<UserLoginPayload> => {
+    login: async (
+      _,
+      args: LoginArgs,
+      { res }: SchemaContext
+    ): Promise<UserLoginPayload> => {
       const { username, password } = args;
 
       const user = await User.findOne({
@@ -127,16 +137,7 @@ const UserResolver: IResolvers = {
         }
 
         try {
-          const token = jwt.sign(
-            {
-              iat: Math.floor(Date.now() / 1000) - 30,
-              exp: Math.floor(Date.now() / 1000) + 60 * 60,
-              data: {
-                id: user._id,
-              },
-            },
-            "react-ssr"
-          );
+          sendRefreshToken(res, createRefreshToken(user));
 
           return {
             success: true,
@@ -153,7 +154,7 @@ const UserResolver: IResolvers = {
               isActive: user.isActive,
               isAdmin: user.isAdmin,
             },
-            token,
+            token: createAccessToken(user),
           };
         } catch (e) {
           throw new Error(e);

@@ -28,7 +28,8 @@ export interface Data {
 
 export interface LoginData extends Data {
   data: {
-    id: ObjectID;
+    username: string;
+    _id: ObjectID;
   };
 }
 

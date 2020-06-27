@@ -60,7 +60,6 @@ const App: React.FC = () => {
 
       if (payload.data) {
         setAccessToken(payload.data.accessToken);
-        console.log(payload.data.accessToken);
       }
 
       setLoading(false);

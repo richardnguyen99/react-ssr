@@ -14,6 +14,7 @@ import { useHistory } from "react-router";
 
 const Login: React.FC = () => {
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const history = useHistory();
   const [loginUser, { loading }] = useLoginUserMutation();
 
@@ -21,6 +22,10 @@ const Login: React.FC = () => {
     <>
       <h1 className="text--serif text--center">Login</h1>
       <div className="form--auth">
+        {error ? <div className="alert alert--error">{error}</div> : null}
+        {success && (
+          <div className="alert alert--success">Logged in successfully</div>
+        )}
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
           onSubmit={async (values, { setSubmitting }) => {
@@ -30,37 +35,40 @@ const Login: React.FC = () => {
                 password: values.password,
               },
               update: (store, { data }) => {
-                console.log(data);
-
-                if (data && data.login && data.login.data) {
+                if (data && data.login) {
                   if (!data.login.success) {
                     setError(data.login.message);
 
                     return null;
                   }
 
-                  store.writeQuery<UserQuery>({
-                    query: UserDocument,
-                    variables: {
-                      username: data.login.data.username,
-                    },
-                    data: {
-                      user: {
-                        message: "fetched for user",
-                        success: true,
-                        data: {
-                          email: data.login.data.email,
-                          username: data.login.data.username,
-                          _id: data.login.data._id,
+                  if (data.login.data) {
+                    setError("");
+                    store.writeQuery<UserQuery>({
+                      query: UserDocument,
+                      variables: {
+                        username: data.login.data.username,
+                      },
+                      data: {
+                        user: {
+                          message: "fetched for user",
+                          success: true,
+                          data: {
+                            email: data.login.data.email,
+                            username: data.login.data.username,
+                            _id: data.login.data._id,
+                          },
                         },
                       },
-                    },
-                  });
+                    });
+                    setSuccess(true);
+                  }
                 }
               },
             });
 
             if (response && response.data) {
+              console.log(response.data.login.token);
               setAccessToken(response.data.login.token);
             }
 

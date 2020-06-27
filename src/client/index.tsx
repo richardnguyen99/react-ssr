@@ -47,7 +47,7 @@ const authLink = () =>
             if (accessToken) {
               operation.setContext({
                 headers: {
-                  authorization: `Bearer ${accessToken}`,
+                  Authorization: `Bearer ${accessToken}`,
                 },
               });
             }

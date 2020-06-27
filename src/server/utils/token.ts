@@ -25,7 +25,7 @@ export const getUserWithToken = async (
 
     const { data } = jwt.verify(token.split(" ")[1], "react-ssr") as LoginData;
 
-    const user = await User.findOne(data.id);
+    const user = await User.findOne(data._id);
 
     return user;
   }
@@ -43,7 +43,6 @@ export const getUserWithToken = async (
 export const sendRefreshToken = (res: Response, token: string): void => {
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: true,
     path: "/api/refresh_token",
   });
 };
@@ -52,9 +51,9 @@ export const createRefreshToken = (user: User): string => {
   return jwt.sign(
     {
       iat: Math.floor(Date.now() / 1000) - 30,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 14,
       data: {
-        id: user._id,
+        username: user.username,
+        _id: user._id,
       },
     },
     "react-ssr",
@@ -68,9 +67,9 @@ export const createAccessToken = (user: User): string => {
   return jwt.sign(
     {
       iat: Math.floor(Date.now() / 1000) - 30,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
       data: {
-        id: user._id,
+        username: user.username,
+        _id: user._id,
       },
     },
     "react-ssr",

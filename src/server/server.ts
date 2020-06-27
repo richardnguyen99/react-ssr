@@ -84,7 +84,9 @@ import {
     try {
       const payload = jwt.verify(token, "react-ssr") as LoginData;
 
-      const user = await User.findOne({ where: { _id: payload.data.id } });
+      const user = await User.findOne({
+        where: { username: payload.data.username },
+      });
 
       if (!user) {
         return res.send({
