@@ -1,7 +1,6 @@
 // Buttons
 
 .btn {
-
   @include btn-solid($text--gray-dark, $gray--000, $gray--000);
 
   appearance: none;
@@ -14,13 +13,13 @@
 
   border: $border-width $border-style $border-color-button;
 
-  border-radius: 0.5rem;
+  border-radius: 3px;
 
   cursor: pointer;
 
   display: inline-block;
 
-  font-size: $font--sans;
+  font-family: $font--sans;
 
   font-weight: 400;
 
@@ -36,7 +35,6 @@
   white-space: nowrap;
 
   &:hover {
-
     background-repeat: repeat-x;
     text-decoration: none;
   }
@@ -48,7 +46,6 @@
   &:disabled,
   &.disabled,
   &[aria-disabled="true"] {
-
     background-position: 0 0;
     cursor: default;
   }
@@ -59,7 +56,17 @@
     background-image: none;
   }
 
+  &--primary {
+    @include btn-solid($text--white, $green--400, $green--500);
+  }
+
   &--dark {
     @include btn-solid($text--white, $gray--600, $gray--900);
+  }
+
+  &--block {
+    display: block;
+    text-align: center;
+    width: 100%;
   }
 }

@@ -1,0 +1,40 @@
+// Alert
+
+.alert {
+  background: $blue--100;
+  border: 1px solid $border--black-fade;
+  border-radius: 3px;
+
+  // Default color
+  color: $blue--800;
+
+  font-size: 13px;
+  padding: 1.25rem;
+  position: relative;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__message {
+    margin-bottom: 1.5rem;
+  }
+
+  &--warn {
+    background-color: $yellow--100;
+    border-color: $border--black-fade;
+    color: $yellow--900;
+  }
+
+  &--error {
+    background-color: $bg--red-light;
+    border-color: $border--black-fade;
+    color: $red--900;
+  }
+
+  &--success {
+    background: $bg--green-light;
+    border-color: $border--black-fade;
+    color: $green--800;
+  }
+}

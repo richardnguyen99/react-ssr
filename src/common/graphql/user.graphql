@@ -1,0 +1,11 @@
+query User($username: String!) {
+  user(username: $username) {
+    message
+    success
+    data {
+      username
+      email
+      _id
+    }
+  }
+}

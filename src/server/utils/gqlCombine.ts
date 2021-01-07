@@ -8,7 +8,7 @@
  */
 import { makeExecutableSchema, mergeSchemas } from "graphql-tools";
 
-import UserSchema from "../graphql/user.gql";
+import UserSchema from "../graphql/user.graphql";
 import UserResolver from "@server/resolvers/User";
 
 const userSchema = makeExecutableSchema({

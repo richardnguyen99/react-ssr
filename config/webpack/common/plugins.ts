@@ -7,6 +7,7 @@ import webpack from "webpack";
 import ManifestPlugin from "webpack-manifest-plugin";
 import CaseSensitivePathsWebpackPlugin from "case-sensitive-paths-webpack-plugin";
 import MiniCSSExtractPlugin from "mini-css-extract-plugin";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 
 import { envGetter } from "^config";
 
@@ -33,6 +34,12 @@ export const clientPlugins: webpack.Plugin[] = [
     __SERVER__: "false",
     __BROWSER__: "true",
   }),
+  process.env.NODE_ENV === "development" &&
+    new ReactRefreshWebpackPlugin({
+      overlay: {
+        sockIntegration: "whm",
+      },
+    }),
 ].filter(Boolean);
 
 export const serverPlugins: webpack.Plugin[] = [
