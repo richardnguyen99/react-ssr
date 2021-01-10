@@ -7,8 +7,8 @@
 
   @if $bg == $gray--000 {
     &:focus,
-    &.focus {
-      box-shadow: $btn__input-focus-shadow;
+    i &.focus {
+      box-shadow: $btn-input-focus-shadow;
     }
 
     &:hover,

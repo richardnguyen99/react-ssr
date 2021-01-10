@@ -30,12 +30,6 @@ module.exports = (api) => {
       "@babel/proposal-class-properties",
       "@babel/proposal-optional-chaining",
       "@babel/syntax-dynamic-import",
-      [
-        "@babel/plugin-transform-runtime",
-        {
-          regenerator: true,
-        },
-      ],
       "macros",
       isDev && isTargetWeb && "react-refresh/babel",
     ].filter(Boolean),
