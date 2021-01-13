@@ -5,7 +5,7 @@
  */
 import React from "react";
 import { RequestHandler, Request, Response } from "express";
-import { StaticRouterContext, matchPath } from "react-router";
+import { StaticRouterContext } from "react-router";
 import { StaticRouter } from "react-router-dom";
 import { renderToString } from "react-dom/server";
 import { Helmet, HelmetData } from "react-helmet";

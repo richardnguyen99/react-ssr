@@ -5,10 +5,10 @@
  */
 import { Entity, BaseEntity, ObjectID, ObjectIdColumn, Column } from "typeorm";
 
-@Entity("users")
+@Entity("User")
 class User extends BaseEntity {
   @ObjectIdColumn()
-  id!: ObjectID;
+  _id!: ObjectID;
 
   @Column("text")
   firstname!: string;
